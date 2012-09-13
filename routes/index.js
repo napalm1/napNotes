@@ -4,29 +4,15 @@
  */
 
 exports.index = function(req, res){
-  
-  // convert all this to node
-
-// // open connection to MongoDB server
-// $conn = new Mongo('localhost');
-// $db = $conn->notes;
-// $collection = $db->notes;
-
-// $comment = "";
-
-// if(isset($_POST['note'])){
-// 	if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest"){
-// 		$collection->update( array( 'user' => 'napalm1' ), array( '$set' => array('comment' => $_POST['note'])), array("upsert" => true ) );
-// 		exit;
-// 	}
-// } else {
-// 	$cursor = $collection->find();
-// 	foreach ($cursor as $obj) {
-// 		$comment = $obj['comment'];
-// 	}
-// }
-// $conn->close();
-
-
-	res.render('index', { title: 'napNotes' })
+	var mongoose = require('mongoose');
+	var db = mongoose.createConnection('localhost', 'notes');
+	var schema = mongoose.Schema({ user: "string", comment: 'string' });
+	var Note = db.model('Note', schema);
+	Note.findOne({ user: 'napalm1' }, 'comment', function (err, doc) {
+	  // if (err) return handleError(err);
+	  // console.log(err);
+	  // console.log(doc);
+	  res.render('index', { title: 'napNotes', comment: doc.comment })
+	});
+	mongoose.disconnect();
 };

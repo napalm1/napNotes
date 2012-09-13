@@ -28,8 +28,25 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', routes.index);
+app.post('/', function(req, res){
+	// @todo prevent these from being duplicated
+	var mongoose = require('mongoose');
+	var db = mongoose.createConnection('localhost', 'notes');
+	var schema = mongoose.Schema({ user: "string", comment: 'string' });
+	var Note = db.model('Note', schema);
+	// console.log("Saving " + req.body.note);
+	Note.update({user:"napalm1"}, {$set: { comment: req.body.note }}, {upsert: true}, function (err, numberAffected, raw) {
+	  console.log(err);
+	  console.log('The number of updated documents was %d', numberAffected);
+	  console.log('The raw response from Mongo was ', raw);
+	  res.end('success');
+	  // mongoose.disconnect();
+	});
+	// mongoose.disconnect();
+	// res.end('success');
+});
+
 
 app.listen(1337);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
