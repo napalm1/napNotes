@@ -1,0 +1,10 @@
+body {
+  /*padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+span { position: absolute; right: 0; top: 0; display: none; font-weight: 700; background: #FFF667; padding: 5px }
