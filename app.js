@@ -37,9 +37,9 @@ app.post('/', function(req, res){
 	var Note = db.model('Note', schema);
 	// console.log("Saving " + req.body.note);
 	Note.update({user:"napalm1"}, {$set: { comment: req.body.note }}, {upsert: true}, function (err, numberAffected, raw) {
-	  console.log(err);
-	  console.log('The number of updated documents was %d', numberAffected);
-	  console.log('The raw response from Mongo was ', raw);
+	  // console.log(err);
+	  // console.log('The number of updated documents was %d', numberAffected);
+	  // console.log('The raw response from Mongo was ', raw);
 	  res.end('success');
 	  // mongoose.disconnect();
 	});
